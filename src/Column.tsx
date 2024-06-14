@@ -1,7 +1,7 @@
-const Column = () => {
+const Column = ({ columnTitle }: { columnTitle: string }) => {
   return (
     <>
-      <h4 className="grid__column-title">Column</h4>
+      <h4 className="grid__column-title">{columnTitle}</h4>
     </>
   );
 };
