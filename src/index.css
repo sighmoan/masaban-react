@@ -66,5 +66,9 @@
     grid-template-columns: auto;
   }
 }
+.grid__column-flexbox {
+  display: flex;
+  flex-direction: column;
+}
 
 /*# sourceMappingURL=index.css.map */
