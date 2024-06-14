@@ -11,6 +11,7 @@ const Card = () => {
     setCardVector: (cv: CardVector) => void
   ] = useState({ gridRowStart: 0, gridColumnStart: 1 });
   const [translateString, setTranslateString] = useState("");
+  const [abortController] = useState(new AbortController());
 
   const followMousePointer = (event) => {
     const translateX = event.clientX;
@@ -23,11 +24,13 @@ const Card = () => {
     <>
       <textarea
         onMouseDown={() => {
-          document.addEventListener("mousemove", followMousePointer);
+          document.addEventListener("mousemove", followMousePointer, {
+            signal: abortController.signal,
+          });
         }}
         onMouseUp={() => {
           console.log("yo");
-          document.removeEventListener("mousemove", followMousePointer);
+          abortController.abort();
         }}
         style={{
           gridColumnStart: cardVector.gridColumnStart,
