@@ -11,18 +11,12 @@ const Card = () => {
     setCardVector: (cv: CardVector) => void
   ] = useState({ gridRowStart: 0, gridColumnStart: 1 });
 
-  const [gridRow, setGridRow] = useState(0);
-  const [gridColumn, setGridColumn] = useState(1);
-
   const moveRight = () => {
-    /*console.log("WHAT");
-    const cv: CardVector = cardVector;
-    console.log(cv);
-    cv.gridColumnStart++;
-    console.log(cv);
-    setCardVector(cv);*/
-    console.log("yo");
-    setGridColumn(gridColumn + 1);
+    console.log("WHAT");
+    setCardVector({
+      ...cardVector,
+      gridColumnStart: cardVector.gridColumnStart + 1,
+    });
   };
 
   return (
@@ -30,7 +24,7 @@ const Card = () => {
       <textarea
         onClick={moveRight}
         //style={{ ...cardVector }}
-        style={{ gridColumnStart: gridColumn }}
+        style={{ gridColumnStart: cardVector.gridColumnStart }}
         className="grid-item"
         defaultValue="yo what up"
       ></textarea>
