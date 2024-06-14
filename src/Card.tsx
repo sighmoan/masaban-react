@@ -30,7 +30,7 @@ const Card = () => {
       <textarea
         onClick={moveRight}
         //style={{ ...cardVector }}
-        style={{ gridRowStart: gridRow, gridColumnStart: gridColumn }}
+        style={{ gridColumnStart: gridColumn }}
         className="grid-item"
         defaultValue="yo what up"
       ></textarea>
