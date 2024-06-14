@@ -2,7 +2,6 @@ import Card from "./Card.tsx";
 
 const Column = (props) => {
   const columnTitle = props.columnTitle;
-  const setLiftedCardHandler = props.cardLiftHandler;
   const liftedCard = props.liftedCard;
 
   return (
@@ -24,7 +23,7 @@ const Column = (props) => {
             }
           }}
         >
-          <Card cardLiftHandler={setLiftedCardHandler} />
+          <Card />
         </div>
       </div>
     </>

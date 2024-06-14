@@ -1,12 +1,19 @@
-const Card = (props) => {
-  const cardLiftHandler = props.cardLiftHandler;
+import { useContext } from "react";
+import { LiftedCardContext } from "./LiftedCardContext";
+
+const Card = () => {
+  const cardLiftHandler =
+    useContext(LiftedCardContext) ??
+    (() => {
+      console.log("default handler");
+    });
 
   return (
     <>
       <textarea
         draggable="true"
         onDragStart={(event) => {
-          cardLiftHandler(event.target);
+          cardLiftHandler.changeState(event.target);
           console.log("setting lifted card to " + event.target);
         }}
         onDragOver={(event) => {
