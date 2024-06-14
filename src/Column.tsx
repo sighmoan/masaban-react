@@ -24,10 +24,7 @@ const Column = (props) => {
             }
           }}
         >
-          <Card
-            liftedCard={props.liftedCard}
-            cardLiftHandler={setLiftedCardHandler}
-          />
+          <Card cardLiftHandler={setLiftedCardHandler} />
         </div>
       </div>
     </>
