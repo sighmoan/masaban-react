@@ -1,8 +1,13 @@
-import { useRef, useState } from "react";
+import { useRef, useState, MutableRefObject } from "react";
 
 type CardVector = {
   gridRowStart: number;
   gridColumnStart: number;
+};
+
+type Vector2d = {
+  x: number;
+  y: number;
 };
 
 const Card = () => {
@@ -12,20 +17,37 @@ const Card = () => {
   ] = useState({ gridRowStart: 0, gridColumnStart: 1 });
   const [translateString, setTranslateString] = useState("");
   const [abortController, setAbortController] = useState(new AbortController());
+  const translateOrigin: MutableRefObject<Vector2d> = useRef<Vector2d>({
+    x: 0,
+    y: 0,
+  });
+  const translation: MutableRefObject<Vector2d> = useRef<Vector2d>({
+    x: 0,
+    y: 0,
+  });
 
-  const followMousePointer = (event) => {
+  const ref = useRef();
+
+  const followMousePointer = (event: MouseEvent) => {
     console.log("a mousemove event happened");
-    const translateX = event.clientX;
-    const translateY = event.clientY;
+    translation.current.x = event.pageX - translateOrigin.current.x;
+    translation.current.y = event.pageY - translateOrigin.current.y;
 
-    setTranslateString(translateX + "px " + translateY + "px");
+    setTranslateString(
+      translation.current.x + "px " + translation.current.y + "px"
+    );
   };
 
   return (
     <>
       <textarea
-        onMouseDown={() => {
+        ref={ref}
+        onMouseDown={(event) => {
           console.log("a mousedown event happened");
+          translateOrigin.current.x = event.pageX;
+          console.log(event.pageX);
+          translateOrigin.current.y = event.pageY;
+
           document.addEventListener("mousemove", followMousePointer, {
             signal: abortController.signal,
           });
