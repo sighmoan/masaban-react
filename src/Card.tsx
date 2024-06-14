@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { LiftedCardContext } from "./LiftedCardContext";
+import { LyricsContext } from "./LyricsContext";
 
 const Card = () => {
   const cardLiftHandler =
@@ -7,6 +8,7 @@ const Card = () => {
     (() => {
       console.log("default handler");
     });
+  const lyricsValue = useContext(LyricsContext);
 
   return (
     <>
@@ -20,7 +22,7 @@ const Card = () => {
           event.preventDefault();
         }}
         className="grid-item"
-        defaultValue="yo what up"
+        defaultValue={lyricsValue()}
       ></textarea>
     </>
   );
