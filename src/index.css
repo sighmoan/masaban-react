@@ -69,6 +69,7 @@
 .grid__column-flexbox {
   display: flex;
   flex-direction: column;
+  min-height: 800px;
 }
 
 /*# sourceMappingURL=index.css.map */

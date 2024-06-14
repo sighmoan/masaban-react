@@ -10,7 +10,9 @@ type Vector2d = {
   y: number;
 };
 
-const Card = () => {
+const Card = (props) => {
+  const cardLiftHandler = props.cardLiftHandler;
+  const liftedCard = props.liftedCard;
   const [cardVector, setCardVector]: [
     cardVector: CardVector,
     setCardVector: (cv: CardVector) => void
@@ -41,22 +43,15 @@ const Card = () => {
   return (
     <>
       <textarea
+        draggable="true"
+        onDragStart={(event) => {
+          cardLiftHandler(event.target);
+          console.log("setting lifted card to " + event.target);
+        }}
+        onDragOver={(event) => {
+          event.preventDefault();
+        }}
         ref={ref}
-        onMouseDown={(event) => {
-          console.log("a mousedown event happened");
-          translateOrigin.current.x = event.pageX;
-          console.log(event.pageX);
-          translateOrigin.current.y = event.pageY;
-
-          document.addEventListener("mousemove", followMousePointer, {
-            signal: abortController.signal,
-          });
-        }}
-        onMouseUp={() => {
-          console.log("yo");
-          abortController.abort();
-          setAbortController(new AbortController());
-        }}
         style={{
           gridColumnStart: cardVector.gridColumnStart,
           translate: translateString,
