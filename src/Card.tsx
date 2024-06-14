@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type CardVector = {
   gridRowStart: number;
@@ -10,21 +10,29 @@ const Card = () => {
     cardVector: CardVector,
     setCardVector: (cv: CardVector) => void
   ] = useState({ gridRowStart: 0, gridColumnStart: 1 });
+  const [translateString, setTranslateString] = useState("");
 
-  const moveRight = () => {
-    console.log("WHAT");
-    setCardVector({
-      ...cardVector,
-      gridColumnStart: cardVector.gridColumnStart + 1,
-    });
+  const followMousePointer = (event) => {
+    const translateX = event.clientX;
+    const translateY = event.clientY;
+
+    setTranslateString(translateX + "px " + translateY + "px");
   };
 
   return (
     <>
       <textarea
-        onClick={moveRight}
-        //style={{ ...cardVector }}
-        style={{ gridColumnStart: cardVector.gridColumnStart }}
+        onMouseDown={() => {
+          document.addEventListener("mousemove", followMousePointer);
+        }}
+        onMouseUp={() => {
+          console.log("yo");
+          document.removeEventListener("mousemove", followMousePointer);
+        }}
+        style={{
+          gridColumnStart: cardVector.gridColumnStart,
+          translate: translateString,
+        }}
         className="grid-item"
         defaultValue="yo what up"
       ></textarea>
