@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type ColumnProperties = {
   columnTitle: string;
   liftedCard: any;
@@ -5,5 +7,5 @@ export type ColumnProperties = {
 
 export type LiftedCardState = {
   liftedCard: EventTarget | null;
-  setLiftedCard: (card: EventTarget) => void;
+  setLiftedCard: Dispatch<SetStateAction<null>> | null;
 };

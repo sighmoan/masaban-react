@@ -1,18 +1,14 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Column from "./Column.tsx";
 import { LiftedCardContext } from "./LiftedCardContext.tsx";
 import { LyricsContext } from "./LyricsContext.ts";
-
-type StateCard = {
-  currentState: any;
-  changeState: Function;
-};
+import { LiftedCardState } from "./types.ts";
 
 const Board = () => {
   const [liftedCard, setLiftedCard] = useState(null);
-  const cardObj: StateCard = {
-    currentState: liftedCard,
-    changeState: setLiftedCard,
+  const cardObj: LiftedCardState = {
+    liftedCard: liftedCard,
+    setLiftedCard: setLiftedCard,
   };
 
   let currentLyric = 0;

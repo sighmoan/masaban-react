@@ -15,7 +15,7 @@ const Card = () => {
       <textarea
         draggable="true"
         onDragStart={(event) => {
-          cardLiftHandler.changeState(event.target);
+          event.target && cardLiftHandler.setLiftedCard(event.target);
           console.log("setting lifted card to " + event.target);
         }}
         onDragOver={(event) => {

@@ -1,10 +1,6 @@
 import { createContext } from "react";
+import { LiftedCardState } from "./types";
 
-type StateCard = {
-  currentState: any;
-  changeState: Function;
-};
-
-const def: StateCard = { currentState: null, changeState: () => {} };
+const def: LiftedCardState = { liftedCard: null, setLiftedCard: () => {} };
 
 export const LiftedCardContext = createContext(def);
