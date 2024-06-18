@@ -14,3 +14,8 @@ export type ColumnTransfer = {
   location: number;
   title: string;
 };
+
+export type CardTransfer = {
+  id: string;
+  contents: string;
+};

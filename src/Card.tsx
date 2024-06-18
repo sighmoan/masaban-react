@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { LiftedCardContext } from "./LiftedCardContext";
 import { apiGetCardContents } from "./_apiService";
 
-const Card = (baseApiUrl: string, uuid: string) => {
+const Card = ({ baseApiUrl, cardId }) => {
   const cardLiftHandler =
     useContext(LiftedCardContext) ??
     (() => {
@@ -11,8 +11,14 @@ const Card = (baseApiUrl: string, uuid: string) => {
   const [cardContents, setCardContents] = useState("");
 
   useEffect(() => {
-    apiGetCardContents(baseApiUrl, uuid).then(setCardContents);
-  }, []);
+    apiGetCardContents(baseApiUrl, cardId)
+      .then((rcvdContents) => {
+        if (rcvdContents) setCardContents(rcvdContents.contents);
+      })
+      .catch(() => {
+        console.log("gotcha");
+      });
+  }, [baseApiUrl, cardId]);
 
   return (
     <>

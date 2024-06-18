@@ -23,7 +23,7 @@ const Column = (props) => {
             }
           }}
         >
-          <Card />
+          <Card baseApiUrl="nah" cardId="abcd" />
         </div>
       </div>
     </>
