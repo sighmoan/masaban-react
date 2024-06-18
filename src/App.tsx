@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <p>Hello</p>
-      <Board />
+      <Board boardId="abcd-efghj-ijklm-nopqrstuv" />
     </>
   );
 }

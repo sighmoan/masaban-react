@@ -9,3 +9,8 @@ export type LiftedCardState = {
   liftedCard: EventTarget | null;
   setLiftedCard: Dispatch<SetStateAction<null>> | null;
 };
+
+export type ColumnTransfer = {
+  location: number;
+  title: string;
+};

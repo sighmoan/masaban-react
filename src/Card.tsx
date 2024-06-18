@@ -1,14 +1,18 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LiftedCardContext } from "./LiftedCardContext";
-import { LyricsContext } from "./LyricsContext";
+import { apiGetCardContents } from "./_apiService";
 
-const Card = () => {
+const Card = (baseApiUrl: string, uuid: string) => {
   const cardLiftHandler =
     useContext(LiftedCardContext) ??
     (() => {
       console.log("default handler");
     });
-  const lyricsValue = useContext(LyricsContext);
+  const [cardContents, setCardContents] = useState("");
+
+  useEffect(() => {
+    apiGetCardContents(baseApiUrl, uuid).then(setCardContents);
+  }, []);
 
   return (
     <>
@@ -22,7 +26,7 @@ const Card = () => {
           event.preventDefault();
         }}
         className="grid-item"
-        defaultValue={lyricsValue()}
+        defaultValue={cardContents}
       ></textarea>
     </>
   );
