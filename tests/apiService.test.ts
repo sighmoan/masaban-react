@@ -1,10 +1,26 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import * as service from "../src/_apiService.ts";
-import { getColumns as mockGetColumn } from "./mockFetches.ts";
+import {
+  getColumns as mockGetColumn,
+  createBoard as mockCreateBoard,
+} from "./mockFetches.ts";
 
 const testBaseApiUrl = "http://localnose:9001/";
 
-describe("The API service", () => {
+describe("The API board service", () => {
+  it("can create a new board", () => {
+    globalThis.fetch = vi
+      .fn()
+      .mockImplementation(() => Promise.resolve(mockCreateBoard));
+
+    return service.createBoard().then((data) => {
+      expect(data).toBeTruthy();
+      expect(data).toContain("api/v1/board/");
+    });
+  });
+});
+
+describe("The API service columns", () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });

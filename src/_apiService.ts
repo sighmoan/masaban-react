@@ -8,6 +8,12 @@ const sampleCards = [
   { id: "defg", contents: "fjkdfjd" },
 ];
 
+const createBoard = async () => {
+  return fetch(`${apiConfig.baseApiUrl}`, { method: "POST" }).then((data) => {
+    return data.headers.get("location");
+  });
+};
+
 const apiGetColumns = async (
   baseApiUrl: string,
   boardId: string
@@ -53,4 +59,4 @@ const apiGetCardContents = async (
   return Promise.resolve(card);
 };
 
-export { apiGetColumns, apiAddColumn, apiGetCardContents };
+export { createBoard, apiGetColumns, apiAddColumn, apiGetCardContents };
