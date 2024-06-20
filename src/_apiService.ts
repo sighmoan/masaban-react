@@ -9,9 +9,9 @@ const sampleCards = [
 ];
 
 const createBoard = async () => {
-  return fetch(`${apiConfig.baseApiUrl}`, { method: "POST" }).then((data) => {
-    return data.headers.get("location");
-  });
+  return fetch(`${apiConfig.baseApiUrl}`, { method: "POST" }).then((data) =>
+    data.headers.get("location")
+  );
 };
 
 const apiGetColumns = async (
@@ -19,9 +19,7 @@ const apiGetColumns = async (
   boardId: string
 ): Promise<ColumnTransfer[]> => {
   return fetch(`${apiConfig.baseApiUrl}/${boardId}/columns`)
-    .then((data) => {
-      return data.json();
-    })
+    .then((data) => data.json())
     .then((json) => {
       const array: ColumnTransfer[] = [];
       json.map((col: string, index: number) => {
