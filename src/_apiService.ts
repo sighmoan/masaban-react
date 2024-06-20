@@ -14,11 +14,9 @@ const apiGetColumns = async (
 ): Promise<ColumnTransfer[]> => {
   return fetch(`${apiConfig.baseApiUrl}/${boardId}/columns`)
     .then((data) => {
-      console.log(data);
       return data.json();
     })
     .then((json) => {
-      console.log("json!", json);
       const array: ColumnTransfer[] = [];
       json.map((col, index) => {
         array.push({ location: index, title: col });
