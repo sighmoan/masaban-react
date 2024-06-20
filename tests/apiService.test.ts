@@ -13,6 +13,12 @@ describe("The API service", () => {
 
     return service.apiGetColumns(testBaseApiUrl, testBoardId).then((data) => {
       expect(data).toBeTruthy();
+      expect(data.length).toBe(3);
+      expect(data[0].title).toBe("To do");
     });
+  });
+
+  it("gracefully handles broken UUIDs", () => {
+    expect(false).toBe(true);
   });
 });
