@@ -4,7 +4,7 @@ import { LiftedCardContext } from "./LiftedCardContext.tsx";
 import { LiftedCardState, ColumnTransfer } from "./types.ts";
 import { apiGetColumns } from "./_apiService.ts";
 
-const Board = (boardId: string) => {
+const Board = ({ boardId }: { boardId: string }) => {
   const [liftedCard, setLiftedCard] = useState(null);
   const [columns, setColumns] = useState<ColumnTransfer[]>();
 
