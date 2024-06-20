@@ -18,22 +18,11 @@ const apiGetColumns = async (
     })
     .then((json) => {
       const array: ColumnTransfer[] = [];
-      json.map((col, index) => {
+      json.map((col: string, index: number) => {
         array.push({ location: index, title: col });
       });
       return array;
     });
-  console.log(baseApiUrl + boardId);
-  const cols = window.localStorage.getItem(`columns-${boardId}`);
-  if (cols.length == 0) {
-    apiAddColumn(baseApiUrl, boardId, "To do", 0);
-  }
-  return [
-    { location: 0, title: "Idea bucket" },
-    { location: 1, title: "To do" },
-    { location: 2, title: "Doing" },
-    { location: 3, title: "Done" },
-  ];
 };
 
 const apiAddColumn = async (
@@ -42,8 +31,14 @@ const apiAddColumn = async (
   columnTitle: string,
   columnLocation: number
 ) => {
-  let cols = window.localStorage.getItem(`columns-${boardId}`);
-  cols += "";
+  fetch(`${apiConfig.baseApiUrl}/${boardId}/column/${columnLocation}`, {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: columnTitle,
+  });
 };
 
 const apiGetCardContents = async (
@@ -58,4 +53,4 @@ const apiGetCardContents = async (
   return Promise.resolve(card);
 };
 
-export { apiGetColumns, apiGetCardContents };
+export { apiGetColumns, apiAddColumn, apiGetCardContents };
