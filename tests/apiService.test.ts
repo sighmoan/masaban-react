@@ -4,6 +4,7 @@ import {
   getColumns as mockGetColumn,
   createBoard as mockCreateBoard,
 } from "./mockFetches.ts";
+import { ColumnTransfer } from "../src/types.ts";
 
 const testBaseApiUrl = "http://localnose:9001/";
 
@@ -33,11 +34,13 @@ describe("The API service columns", () => {
       .fn()
       .mockImplementation((url: string) => Promise.resolve(mockGetColumn));
 
-    return service.apiGetColumns(testBaseApiUrl, testBoardId).then((data) => {
-      expect(data).toBeTruthy();
-      expect(data.length).toBe(3);
-      expect(data[0].title).toBe("To do");
-    });
+    return service
+      .apiGetColumns(testBaseApiUrl, testBoardId)
+      .then((data: ColumnTransfer[]) => {
+        expect(data).toBeTruthy();
+        expect(data.length).toBe(3);
+        expect(data[0].title).toBe("To do");
+      });
   });
 
   it("can add a column", () => {

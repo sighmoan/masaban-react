@@ -11,9 +11,17 @@ const Board = ({ boardId }: { boardId: string }) => {
 
   const baseApiUrl = "nothing/";
 
+  const invalidate = () => {
+    queryClient.invalidateQueries({ queryKey: [boardId] });
+  };
+
   const columns = useQuery({
     queryKey: [boardId],
-    queryFn: () => apiGetColumns(baseApiUrl, boardId),
+    queryFn: async () => {
+      let output = await apiGetColumns(baseApiUrl, boardId);
+      console.log(output);
+      return output;
+    },
   });
 
   const cardObj: LiftedCardState = {
@@ -22,12 +30,8 @@ const Board = ({ boardId }: { boardId: string }) => {
   };
 
   const addColumnMutation = useMutation({
-    mutationFn: () => {
-      return apiAddColumn("", boardId, "New column", 2);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [boardId] });
-    },
+    mutationFn: () => apiAddColumn("", boardId, "New column", 2),
+    onSuccess: invalidate,
   });
 
   const addColumn = () => {
@@ -42,9 +46,9 @@ const Board = ({ boardId }: { boardId: string }) => {
           {columns.data?.map((col) => (
             <Column
               key={col.id}
+              invalidateCache={invalidate}
               boardId={boardId}
-              columnId={col.id}
-              columnTitle={col.title}
+              {...col}
             />
           ))}
         </LiftedCardContext.Provider>

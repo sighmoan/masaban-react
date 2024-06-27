@@ -1,27 +1,50 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiDeleteColumn } from "./_apiService.ts";
+import { apiDeleteColumn, apiRenameColumn } from "./_apiService.ts";
 import Card from "./Card.tsx";
 
 const Column = (props) => {
   const columnTitle = props.columnTitle;
   const liftedCard = props.liftedCard;
-  const queryClient = useQueryClient();
+
+  const renameMutation = useMutation({
+    mutationFn: (newLabel: string) =>
+      apiRenameColumn(props.boardId, props.id, {
+        label: newLabel,
+        index: props.index,
+      }),
+  });
 
   const deleteMutation = useMutation({
-    mutationFn: () => apiDeleteColumn(props.boardId, props.columnId),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: [props.boardId] }),
+    mutationFn: () => {
+      console.log("deleting");
+      return apiDeleteColumn(props.boardId, props.id);
+    },
+    onError: () => {
+      console.log("error");
+    },
+    onSuccess: () => {
+      console.log("successfully mutated ", props.boardId.trim());
+      props.invalidateCache();
+    },
   });
 
   return (
     <>
       <div className="column">
-        <h4 className="grid__column-title">{columnTitle}</h4>
+        <input
+          onBlur={(e) => {
+            console.log(e);
+            renameMutation.mutate(e.target.value);
+          }}
+          className="grid__column-title"
+          type="text"
+          defaultValue={props.title}
+        />
         <div
           style={{
             display: "flex",
-            "justify-content": "space-between",
-            "margin-bottom": "1.5em",
+            justifyContent: "space-between",
+            marginBottom: "1.5em",
           }}
         >
           <small>Left</small>

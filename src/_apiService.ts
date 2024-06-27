@@ -36,7 +36,7 @@ const apiAddColumn = async (
   columnLocation: number
 ) => {
   const newColumn = { label: columnTitle, index: columnLocation };
-  fetch(`${apiConfig.baseApiUrl}/${boardId}/columns`, {
+  return fetch(`${apiConfig.baseApiUrl}/${boardId}/columns`, {
     method: "POST",
     mode: "cors",
     headers: {
@@ -47,7 +47,7 @@ const apiAddColumn = async (
 };
 
 const apiDeleteColumn = async (boardId: string, columnId: string) => {
-  fetch(`${apiConfig.baseApiUrl}/${boardId}/columns/${columnId}`, {
+  return fetch(`${apiConfig.baseApiUrl}/${boardId}/columns/${columnId}`, {
     method: "DELETE",
     mode: "cors",
   });
