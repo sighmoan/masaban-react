@@ -26,6 +26,8 @@ describe("The API service columns", () => {
   });
 
   const testBoardId = "6c9995fe-9e18-45b1-867b-bc44bdc3691c";
+  const testColumnId = "bc44bdc3-45b1-9e18-867b-6c9995fe691c";
+
   it("gets column titles", () => {
     globalThis.fetch = vi
       .fn()
@@ -44,8 +46,22 @@ describe("The API service columns", () => {
     service.apiAddColumn(testBaseApiUrl, testBoardId, "test column name", 1);
 
     const args = spy.mock.lastCall[1];
-    expect(args.body).toBe("test column name");
+    expect(args.body).toContain("test column name");
   });
+
+  it("can rename a column", () => {
+    // Arrange
+    const newColumn = { label: "assonance", index: 1 };
+    const spy = vi.spyOn(globalThis, "fetch");
+    // Act
+    service.apiRenameColumn(testBoardId, testColumnId, newColumn);
+
+    expect(spy).toBeCalled();
+  });
+
+  it("can move a column", () => {});
+
+  it("can delete a column", () => {});
 
   it.skip("gracefully handles broken UUIDs", () => {
     expect(false).toBe(true);

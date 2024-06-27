@@ -35,13 +35,14 @@ const apiAddColumn = async (
   columnTitle: string,
   columnLocation: number
 ) => {
-  fetch(`${apiConfig.baseApiUrl}/${boardId}/column/${columnLocation}`, {
+  const newColumn = { label: columnTitle, index: columnLocation };
+  fetch(`${apiConfig.baseApiUrl}/${boardId}/columns`, {
     method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },
-    body: columnTitle,
+    body: JSON.stringify(newColumn),
   });
 };
 
@@ -57,4 +58,25 @@ const apiGetCardContents = async (
   return Promise.resolve(card);
 };
 
-export { createBoard, apiGetColumns, apiAddColumn, apiGetCardContents };
+const apiRenameColumn = (
+  boardId: any,
+  columnId: any,
+  newColumn: { label: string; index: number }
+): Promise<Response> => {
+  return fetch(`${apiConfig.baseApiUrl}/${boardId}/columns/${columnId}`, {
+    method: "PUT",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newColumn),
+  });
+};
+
+export {
+  createBoard,
+  apiGetColumns,
+  apiAddColumn,
+  apiGetCardContents,
+  apiRenameColumn,
+};
