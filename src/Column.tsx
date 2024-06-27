@@ -28,6 +28,21 @@ const Column = (props) => {
     },
   });
 
+  const moveMutation = useMutation({
+    mutationFn: (dir) => {
+      console.log("moving ", dir);
+      console.log(props.location + dir);
+      return apiRenameColumn(props.boardId, props.id, {
+        label: props.title,
+        index: props.location + dir,
+      });
+    },
+    onSuccess: () => {
+      console.log("successfully mutated ", props.boardId.trim());
+      props.invalidateCache();
+    },
+  });
+
   return (
     <>
       <div className="column">
@@ -47,8 +62,8 @@ const Column = (props) => {
             marginBottom: "1.5em",
           }}
         >
-          <small>&lt;</small>
-          <small onClick={() => deleteMutation.mutate()}>delete</small>
+          <small onClick={() => moveMutation.mutate(-1)}>&lt;</small>
+          <small onClick={deleteMutation.mutate}>delete</small>
           <small>&gt;</small>
         </div>
         <div
