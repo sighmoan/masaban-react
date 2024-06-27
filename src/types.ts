@@ -11,6 +11,7 @@ export type LiftedCardState = {
 };
 
 export type ColumnTransfer = {
+  id: string;
   location: number;
   title: string;
 };

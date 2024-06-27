@@ -3,16 +3,17 @@ import Column from "./Column.tsx";
 import { LiftedCardContext } from "./LiftedCardContext.tsx";
 import { LiftedCardState, ColumnTransfer } from "./types.ts";
 import { apiGetColumns } from "./_apiService.ts";
+import { useQuery } from "@tanstack/react-query";
 
 const Board = ({ boardId }: { boardId: string }) => {
   const [liftedCard, setLiftedCard] = useState(null);
-  const [columns, setColumns] = useState<ColumnTransfer[]>();
 
   const baseApiUrl = "nothing/";
 
-  useEffect(() => {
-    apiGetColumns(baseApiUrl, boardId).then(setColumns);
-  }, [boardId]);
+  const columns = useQuery({
+    queryKey: [boardId],
+    queryFn: () => apiGetColumns(baseApiUrl, boardId),
+  });
 
   const cardObj: LiftedCardState = {
     liftedCard: liftedCard,
@@ -23,8 +24,8 @@ const Board = ({ boardId }: { boardId: string }) => {
     <>
       <div className="grid-container" id="grid-container">
         <LiftedCardContext.Provider value={cardObj}>
-          {columns?.map((col, index) => (
-            <Column key={col.location} columnTitle={col.title} />
+          {columns.data?.map((col) => (
+            <Column key={col.id} columnTitle={col.title} />
           ))}
         </LiftedCardContext.Provider>
       </div>
