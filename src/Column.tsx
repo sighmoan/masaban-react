@@ -64,7 +64,7 @@ const Column = (props) => {
         >
           <small onClick={() => moveMutation.mutate(-1)}>&lt;</small>
           <small onClick={deleteMutation.mutate}>delete</small>
-          <small>&gt;</small>
+          <small onClick={() => moveMutation.mutate(+1)}>&gt;</small>
         </div>
         <div
           className="grid__column-flexbox"
