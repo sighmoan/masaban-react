@@ -61,7 +61,13 @@ describe("The API service columns", () => {
 
   it("can move a column", () => {});
 
-  it("can delete a column", () => {});
+  it("can delete a column", () => {
+    const spy = vi.spyOn(globalThis, "fetch");
+
+    service.apiDeleteColumn(testColumnId);
+
+    expect(spy).toBeCalled();
+  });
 
   it.skip("gracefully handles broken UUIDs", () => {
     expect(false).toBe(true);

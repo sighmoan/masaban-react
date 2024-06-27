@@ -40,7 +40,12 @@ const Board = ({ boardId }: { boardId: string }) => {
       <div className="grid-container" id="grid-container">
         <LiftedCardContext.Provider value={cardObj}>
           {columns.data?.map((col) => (
-            <Column key={col.id} columnTitle={col.title} />
+            <Column
+              key={col.id}
+              boardId={boardId}
+              columnId={col.id}
+              columnTitle={col.title}
+            />
           ))}
         </LiftedCardContext.Provider>
       </div>

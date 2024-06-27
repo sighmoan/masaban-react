@@ -57,7 +57,11 @@ export const getColumns: Response = {
     throw new Error("Function not implemented.");
   },
   json: function (): Promise<string[]> {
-    return Promise.resolve(["To do", "Doing", "Done"]);
+    return Promise.resolve([
+      { label: "To do" },
+      { label: "Doing" },
+      { label: "Done" },
+    ]);
   },
   text: function (): Promise<string> {
     throw new Error("Function not implemented.");

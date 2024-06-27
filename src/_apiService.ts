@@ -22,8 +22,8 @@ const apiGetColumns = async (
     .then((data) => data.json())
     .then((json) => {
       const array: ColumnTransfer[] = [];
-      json.map((col: string, index: number) => {
-        array.push({ location: index, title: col });
+      json.map((col: object, index: number) => {
+        array.push({ id: col.id, location: col.index, title: col.label });
       });
       return array;
     });
@@ -43,6 +43,13 @@ const apiAddColumn = async (
       "Content-Type": "application/json",
     },
     body: JSON.stringify(newColumn),
+  });
+};
+
+const apiDeleteColumn = async (boardId: string, columnId: string) => {
+  fetch(`${apiConfig.baseApiUrl}/${boardId}/columns/${columnId}`, {
+    method: "DELETE",
+    mode: "cors",
   });
 };
 
@@ -79,4 +86,5 @@ export {
   apiAddColumn,
   apiGetCardContents,
   apiRenameColumn,
+  apiDeleteColumn,
 };
