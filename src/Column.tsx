@@ -47,9 +47,9 @@ const Column = (props) => {
             marginBottom: "1.5em",
           }}
         >
-          <small>Left</small>
-          <small>Right</small>
-          <small onClick={() => deleteMutation.mutate()}>Delete</small>
+          <small>&lt;</small>
+          <small onClick={() => deleteMutation.mutate()}>delete</small>
+          <small>&gt;</small>
         </div>
         <div
           className="grid__column-flexbox"
