@@ -1,8 +1,15 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiDeleteColumn, apiRenameColumn } from "./_apiService.ts";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  apiDeleteColumn,
+  apiRenameColumn,
+  apiGetCardsByColumn,
+  apiAddCardOnColumn,
+} from "./_apiService.ts";
 import Card from "./Card.tsx";
+import { CardTransfer } from "./types.ts";
 
 const Column = (props) => {
+  const queryClient = useQueryClient();
   const columnTitle = props.columnTitle;
   const liftedCard = props.liftedCard;
 
@@ -43,6 +50,20 @@ const Column = (props) => {
     },
   });
 
+  const addCardMutation = useMutation({
+    mutationFn: () => {
+      return apiAddCardOnColumn(props.boardId, props.id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [props.id] });
+    },
+  });
+
+  const cards = useQuery({
+    queryKey: [props.id],
+    queryFn: () => apiGetCardsByColumn(props.boardId, props.id),
+  });
+
   return (
     <>
       <div className="column">
@@ -63,8 +84,17 @@ const Column = (props) => {
           }}
         >
           <small onClick={() => moveMutation.mutate(-1)}>&lt;</small>
-          <small onClick={deleteMutation.mutate}>delete</small>
+          <small onClick={() => deleteMutation.mutate()}>delete</small>
           <small onClick={() => moveMutation.mutate(+1)}>&gt;</small>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            marginBottom: "1.5em",
+          }}
+        >
+          <small onClick={() => addCardMutation.mutate()}>add card</small>
         </div>
         <div
           className="grid__column-flexbox"
@@ -81,7 +111,9 @@ const Column = (props) => {
             }
           }}
         >
-          <Card baseApiUrl="nah" cardId="abcd" />
+          {cards.data?.map((card: CardTransfer) => (
+            <Card cardId={card.id} defaultContents={card.contents} />
+          ))}
         </div>
       </div>
     </>

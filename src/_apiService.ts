@@ -80,6 +80,31 @@ const apiRenameColumn = (
   });
 };
 
+const apiGetCardsByColumn = (
+  boardId: any,
+  columnId: any
+): Promise<CardTransfer[]> => {
+  return fetch(`${apiConfig.baseApiUrl}/${boardId}/columns/${columnId}/cards`)
+    .then((data) => data.json())
+    .then((json) => {
+      const array: CardTransfer[] = [];
+      json.map((card: object, index: number) => {
+        array.push({ id: card.id, contents: card.text });
+      });
+      return array;
+    });
+};
+
+const apiAddCardOnColumn = (boardId: any, columnId: any) => {
+  return fetch(`${apiConfig.baseApiUrl}/${boardId}/columns/${columnId}/cards`, {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
 export {
   createBoard,
   apiGetColumns,
@@ -87,4 +112,6 @@ export {
   apiGetCardContents,
   apiRenameColumn,
   apiDeleteColumn,
+  apiGetCardsByColumn,
+  apiAddCardOnColumn,
 };

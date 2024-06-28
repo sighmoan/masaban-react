@@ -2,15 +2,15 @@ import { useContext, useEffect, useState } from "react";
 import { LiftedCardContext } from "./LiftedCardContext";
 import { apiGetCardContents } from "./_apiService";
 
-const Card = ({ baseApiUrl, cardId }) => {
+const Card = ({ baseApiUrl, cardId, defaultContents }) => {
   const cardLiftHandler =
     useContext(LiftedCardContext) ??
     (() => {
       console.log("default handler");
     });
-  const [cardContents, setCardContents] = useState("");
+  const [cardContents, setCardContents] = useState(defaultContents);
 
-  useEffect(() => {
+  /*  useEffect(() => {
     apiGetCardContents(baseApiUrl, cardId)
       .then((rcvdContents) => {
         if (rcvdContents) setCardContents(rcvdContents.contents);
@@ -18,7 +18,7 @@ const Card = ({ baseApiUrl, cardId }) => {
       .catch(() => {
         console.log("gotcha");
       });
-  }, [baseApiUrl, cardId]);
+  }, [baseApiUrl, cardId]);*/
 
   return (
     <>
