@@ -22,7 +22,7 @@ const apiGetColumns = async (
     .then((data) => data.json())
     .then((json) => {
       const array: ColumnTransfer[] = [];
-      json.map((col: object, index: number) => {
+      json.map((col: { id: string; index: number; label: string }) => {
         array.push({ id: col.id, location: col.index, title: col.label });
       });
       return array;
@@ -66,8 +66,8 @@ const apiGetCardContents = async (
 };
 
 const apiRenameColumn = (
-  boardId: any,
-  columnId: any,
+  boardId: string,
+  columnId: string,
   newColumn: { label: string; index: number }
 ): Promise<Response> => {
   return fetch(`${apiConfig.baseApiUrl}/${boardId}/columns/${columnId}`, {
@@ -81,27 +81,42 @@ const apiRenameColumn = (
 };
 
 const apiGetCardsByColumn = (
-  boardId: any,
-  columnId: any
+  boardId: string,
+  columnId: string
 ): Promise<CardTransfer[]> => {
   return fetch(`${apiConfig.baseApiUrl}/${boardId}/columns/${columnId}/cards`)
     .then((data) => data.json())
     .then((json) => {
       const array: CardTransfer[] = [];
-      json.map((card: object, index: number) => {
+      json.map((card: { id: string; text: string }) => {
         array.push({ id: card.id, contents: card.text });
       });
       return array;
     });
 };
 
-const apiAddCardOnColumn = (boardId: any, columnId: any) => {
+const apiAddCardOnColumn = (boardId: string, columnId: string) => {
   return fetch(`${apiConfig.baseApiUrl}/${boardId}/columns/${columnId}/cards`, {
     method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },
+  });
+};
+
+const apiUpdateCard = (
+  boardId: string,
+  cardId: string,
+  contents: CardTransfer
+) => {
+  return fetch(`${apiConfig.baseApiUrl}/${boardId}/card/${cardId}`, {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(contents),
   });
 };
 
@@ -114,4 +129,5 @@ export {
   apiDeleteColumn,
   apiGetCardsByColumn,
   apiAddCardOnColumn,
+  apiUpdateCard,
 };
