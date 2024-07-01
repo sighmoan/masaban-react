@@ -20,7 +20,6 @@ function App() {
 
   return (
     <>
-      <p>Hello</p>
       {boardId ? (
         <Board boardId={boardId} />
       ) : (
