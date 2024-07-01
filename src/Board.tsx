@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Column from "./Column.tsx";
 import { LiftedCardContext } from "./LiftedCardContext.tsx";
-import { LiftedCardState, ColumnTransfer } from "./types.ts";
+import { LiftedCardState } from "./types.ts";
 import { apiGetColumns, apiAddColumn } from "./_apiService.ts";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -17,11 +17,7 @@ const Board = ({ boardId }: { boardId: string }) => {
 
   const columns = useQuery({
     queryKey: [boardId],
-    queryFn: async () => {
-      let output = await apiGetColumns(baseApiUrl, boardId);
-      console.log(output);
-      return output;
-    },
+    queryFn: async () => apiGetColumns(baseApiUrl, boardId),
   });
 
   const cardObj: LiftedCardState = {
