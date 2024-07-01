@@ -10,16 +10,6 @@ const Card = ({ baseApiUrl, cardId, defaultContents }) => {
     });
   const [cardContents, setCardContents] = useState(defaultContents);
 
-  /*  useEffect(() => {
-    apiGetCardContents(baseApiUrl, cardId)
-      .then((rcvdContents) => {
-        if (rcvdContents) setCardContents(rcvdContents.contents);
-      })
-      .catch(() => {
-        console.log("gotcha");
-      });
-  }, [baseApiUrl, cardId]);*/
-
   return (
     <>
       <textarea

@@ -62,7 +62,9 @@ describe("The API service columns", () => {
     expect(spy).toBeCalled();
   });
 
-  it("can move a column", () => {});
+  it("can move a column", () => {
+    // Arrange
+  });
 
   it("can delete a column", () => {
     const spy = vi.spyOn(globalThis, "fetch");
