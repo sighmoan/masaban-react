@@ -4,11 +4,13 @@ import { LiftedCardContext } from "./LiftedCardContext.tsx";
 import { LiftedCardState } from "./types.ts";
 import { apiGetColumns, apiAddColumn } from "./_apiService.ts";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useLoaderData } from "@tanstack/react-router";
 
-const Board = ({ boardId }: { boardId: string }) => {
+const Board = () => {
   const [liftedCard, setLiftedCard] = useState(null);
   const queryClient = useQueryClient();
-
+  const { boardId } = useLoaderData({ from: "/board/$boardId" });
+  console.log(boardId);
   const baseApiUrl = "nothing/";
 
   const invalidate = () => {
