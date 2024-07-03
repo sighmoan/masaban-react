@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       {boardId ? (
-        <Board boardId={boardId} />
+        <Board />
       ) : (
         <button onClick={createBoard}>Create a new board</button>
       )}

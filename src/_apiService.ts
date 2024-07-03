@@ -14,10 +14,7 @@ const createBoard = async () => {
   );
 };
 
-const apiGetColumns = async (
-  baseApiUrl: string,
-  boardId: string
-): Promise<ColumnTransfer[]> => {
+const apiGetColumns = async (boardId: string): Promise<ColumnTransfer[]> => {
   return fetch(`${apiConfig.baseApiUrl}/${boardId}/columns`)
     .then((data) => data.json())
     .then((json) => {
@@ -30,7 +27,6 @@ const apiGetColumns = async (
 };
 
 const apiAddColumn = async (
-  baseApiUrl: string,
   boardId: string,
   columnTitle: string,
   columnLocation: number
@@ -53,10 +49,7 @@ const apiDeleteColumn = async (boardId: string, columnId: string) => {
   });
 };
 
-const apiGetCardContents = async (
-  baseApiUrlWithBoard: string,
-  cardId: string
-): Promise<CardTransfer> => {
+const apiGetCardContents = async (cardId: string): Promise<CardTransfer> => {
   console.log("searching for ", cardId);
   const card: CardTransfer | undefined = sampleCards.find(
     (card) => card.id == cardId
