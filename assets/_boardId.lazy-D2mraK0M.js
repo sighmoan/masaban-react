@@ -1,0 +1,1 @@
+import{j as r,c as n}from"./index-CdIS4aTa.js";const o=()=>r.jsxs(r.Fragment,{children:[r.jsx("button",{children:"Add Column"}),r.jsx("div",{className:"grid-container",id:"grid-container"})]});n("/board/$boardId")({component:o});
